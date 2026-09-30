@@ -1,6 +1,6 @@
 const SUPABASE_URL = "https://undacyotamlcxkuoxoka.supabase.co";
 
-const SUPABASE_KEY = "BURAYA_PUBLISHABLE_KEYİNİ_YAPIŞTIR";
+const SUPABASE_KEY = "SENİN_PUBLISHABLE_KEYİN";
 
 const supabaseClient = window.supabase.createClient(
     SUPABASE_URL,

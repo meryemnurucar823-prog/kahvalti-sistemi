@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Kahvaltı Katılım Sistemi</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>🍳 Kahvaltı Katılım</h1>
+
+        <p>Bu hafta kahvaltı yapacağınız günleri seçin.</p>
+
+        <input type="text" id="name" placeholder="Ad Soyad">
+
+        <div class="day">
+            <span>Pazartesi</span>
+            <input type="checkbox" id="pazartesi">
+        </div>
+
+        <div class="day">
+            <span>Salı</span>
+            <input type="checkbox" id="sali">
+        </div>
+
+        <div class="day">
+            <span>Çarşamba</span>
+            <input type="checkbox" id="carsamba">
+        </div>
+
+        <div class="day">
+            <span>Perşembe</span>
+            <input type="checkbox" id="persembe">
+        </div>
+
+        <div class="day">
+            <span>Cuma</span>
+            <input type="checkbox" id="cuma">
+        </div>
+
+        <button class="save-btn" onclick="kaydet()">
+            Tercihimi Kaydet
+        </button>
+
+        <p id="mesaj"></p>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

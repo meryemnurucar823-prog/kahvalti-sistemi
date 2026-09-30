@@ -1,8 +1,28 @@
-function kaydet() {
+const SUPABASE_URL = "https://undacyotamlcxkuoxoka.supabase.co";
 
-    const isim = document.getElementById("name").value;
+const SUPABASE_KEY = "BURAYA_PUBLISHABLE_KEYİNİ_YAPIŞTIR";
 
-    if (isim.trim() === "") {
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+function haftaninBaslangici() {
+    const tarih = new Date();
+    const gun = tarih.getDay();
+
+    const fark = gun === 0 ? -6 : 1 - gun;
+
+    tarih.setDate(tarih.getDate() + fark);
+
+    return tarih.toISOString().split("T")[0];
+}
+
+async function kaydet() {
+
+    const isim = document.getElementById("name").value.trim();
+
+    if (isim === "") {
         document.getElementById("mesaj").innerText =
             "Lütfen adınızı ve soyadınızı yazın.";
         return;
@@ -34,29 +54,28 @@ function kaydet() {
         return;
     }
 
-    // Daha önce kaydedilmiş kayıtları al
-    let kayitlar =
-        JSON.parse(localStorage.getItem("kahvaltiKayitlari")) || [];
+    const { error } = await supabaseClient
+        .from("kahvalti_kayitlari")
+        .insert([
+            {
+                isim: isim,
+                gunler: secilenGunler,
+                hafta_baslangic: haftaninBaslangici()
+            }
+        ]);
 
-    // Yeni kaydı oluştur
-    const yeniKayit = {
-        isim: isim.trim(),
-        gunler: secilenGunler
-    };
+    if (error) {
+        console.error(error);
 
-    // Yeni kaydı listeye ekle
-    kayitlar.push(yeniKayit);
+        document.getElementById("mesaj").innerText =
+            "❌ Kayıt sırasında bir hata oluştu.";
 
-    // LocalStorage'a kaydet
-    localStorage.setItem(
-        "kahvaltiKayitlari",
-        JSON.stringify(kayitlar)
-    );
+        return;
+    }
 
     document.getElementById("mesaj").innerText =
         "✅ " + isim + ", tercihiniz kaydedildi!";
 
-    // Formu temizle
     document.getElementById("name").value = "";
 
     document.getElementById("pazartesi").checked = false;
@@ -64,8 +83,4 @@ function kaydet() {
     document.getElementById("carsamba").checked = false;
     document.getElementById("persembe").checked = false;
     document.getElementById("cuma").checked = false;
-
-    console.log("Çalışan:", isim);
-    console.log("Kahvaltı günleri:", secilenGunler);
-    console.log("Tüm kayıtlar:", kayitlar);
 }
